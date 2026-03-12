@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Title — Saudade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1208;
+      --paper: #f5f0e8;
+      --warm: #c8a96e;
+      --muted: #8a7960;
+      --faint: #e4ddd0;
+      --accent: #7a3b2e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 80% 10%, rgba(200,169,110,0.10) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3.5rem;
+      background: rgba(245,240,232,0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--faint);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      position: relative;
+    }
+    .logo::after {
+      content: '';
+      display: block;
+      height: 2px;
+      width: 0;
+      background: var(--warm);
+      transition: width 0.4s ease;
+      margin-top: 1px;
+    }
+    .logo:hover::after { width: 100%; }
+
+    .back-link {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── SHARED COLUMN WIDTH ── */
+    .post-header,
+    .post-body,
+    .post-nav {
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: 3.5rem;
+      padding-right: 3.5rem;
+    }
+
+    /* ── POST HEADER ── */
+    .post-header {
+      padding-top: 4rem;
+      padding-bottom: 2.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .post-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(122,59,46,0.08);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .post-date {
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .post-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1.4rem;
+    }
+
+    .post-subtitle {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .post-rule {
+      width: 50px;
+      height: 1px;
+      background: var(--warm);
+    }
+
+    /* ── POST BODY ── */
+    .post-body {
+      padding-top: 0;
+      padding-bottom: 2rem;
+      animation: fadeUp 0.8s ease 0.15s both;
+    }
+
+    .post-body p {
+      line-height: 1.85;
+      color: var(--ink);
+      margin-bottom: 1.6rem;
+    }
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-body em { font-style: italic; }
+    .post-body strong { font-weight: 600; }
+
+    /* ── END ORNAMENT ── */
+    .post-end {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 3rem 0 0;
+      color: var(--warm);
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+    }
+    .post-end::before,
+    .post-end::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--faint);
+    }
+
+    /* ── BACK NAV ── */
+    .post-nav {
+      padding-top: 2.5rem;
+      padding-bottom: 5rem;
+    }
+    .post-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .post-nav a:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3.5rem;
+      border-top: 1px solid var(--faint);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p {
+      font-size: 1.4rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--warm);
+    }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .post-header,
+      .post-body,
+      .post-nav { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="x.html" class="logo">Saudade</a>
+    <a href="x.html" class="back-link">← All Posts</a>
+  </header>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <span class="post-tag">Memory</span>
+      <span class="post-date">March 8, 2026</span>
+    </div>
+    <h1 class="post-title">The Architecture of Forgetting</h1>
+    <p class="post-subtitle">How the mind dismantles rooms it no longer visits.</p>
+    <div class="post-rule"></div>
+  </div>
+
+  <article class="post-body">
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    <div class="post-end">✦</div>
+  </article>
+
+  <footer>
+    <p>"The higher we soar, the smaller we appear to those who cannot fly." — Nietzsche</p>
+    <span class="footer-logo">Saudade</span>
+  </footer>
+
+</body>
+</html>
